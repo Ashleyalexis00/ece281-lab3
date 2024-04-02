@@ -103,38 +103,56 @@ architecture thunderbird_fsm_arch of thunderbird_fsm is
 begin
 
 	-- CONCURRENT STATEMENTS --------------------------------------------------------	
-	s_Q_next(2) <= (not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left and not i_right) or
-	               (not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left and i_right) or
-	               (not s_Q(2) and s_Q(1) and not s_Q(0)) or
-	               (s_Q(2) and s_Q(1) and not s_Q(0));
-	s_Q_next(1) <= (not s_Q(2) and not s_Q(1) and not s_Q(0) and not i_left and i_right)or
-	               (not s_Q(2) and s_Q(1) and not s_Q(0)) or
-	               (s_Q(2) and not s_Q(1) and s_Q(0)) or
-	               (s_Q(2) and s_Q(1) and not s_Q(0));
-	s_Q_next(0) <= (not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left and not i_right)or
+	s_Q_next(2) <= ((not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left and not i_right) or
 	               (not s_Q(2) and s_Q(1) and s_Q(0)) or
-	               (s_Q(2) and not s_Q(1)and s_Q(0)) or
-	               (S_Q(2) and s_Q(1) and not s_Q(0));
+	               (s_Q(2) and not s_Q(1) and not s_Q(0)));
+	s_Q_next(1) <= ((not s_Q(2) and not s_Q(1) and not s_Q(0) and not i_left and i_right)or
+	               ( s_Q(1) and not s_Q(0)) or
+	               (s_Q(2) and not s_Q(1) and s_Q(0)));
+	s_Q_next(0) <= ((not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left) or
+	               (s_Q(1) and not s_Q(0)));
 
+--	s_Q_next(2) <= ((not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left and not i_right) or
+--	               (not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left and i_right) or
+--	               (not s_Q(2) and s_Q(1) and not s_Q(0)) or
+--	               (s_Q(2) and s_Q(1) and not s_Q(0)));
+--	s_Q_next(1) <= ((not s_Q(2) and not s_Q(1) and not s_Q(0) and not i_left and i_right)or
+--	               (not s_Q(2) and s_Q(1) and not s_Q(0)) or
+--	               (s_Q(2) and not s_Q(1) and s_Q(0)) or
+--	               (s_Q(2) and s_Q(1) and not s_Q(0)));
+--	s_Q_next(0) <= ((not s_Q(2) and not s_Q(1) and not s_Q(0) and i_left and not i_right)or
+--	               (not s_Q(2) and s_Q(1) and s_Q(0)) or
+--	               (s_Q(2) and not s_Q(1)and s_Q(0)) or
+--	               (S_Q(2) and s_Q(1) and not s_Q(0)));
 	
-	o_Lights_L(2) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
-	                 ( s_Q(2) and s_Q(1) and s_Q(0));
-	o_Lights_L(1) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
+--	o_Lights_L(2) <= ((not s_Q(2) and not s_Q(1) and s_Q(0)) or
+--	                 ( s_Q(2) and s_Q(1) and s_Q(0)));
+--	o_Lights_L(1) <= ((not s_Q(2) and not s_Q(1) and s_Q(0)) or
+--	                 (s_Q(2) and s_Q(1) and not s_Q(0)) or
+--	                 (s_Q(2)and s_Q(1) and s_Q(0)));
+--	o_Lights_L(0) <= ((not s_Q(2)and not s_Q(1) and s_Q(0)) or
+--	                 (s_Q(2) and not s_Q(1) and s_Q(0)) or 
+--	                 (s_Q(2)and s_Q(1)  and not s_Q(0)) or
+--	                 (s_Q(2) and s_Q(1) and s_Q(0)));
+
+
+	o_lights_L(2) <= ((not s_Q(2) and not s_Q(1) and s_Q(0)) or
+	                 ( s_Q(2) and s_Q(1) and s_Q(0)));
+	o_lights_L(1) <= ((not s_Q(2) and not s_Q(1) and s_Q(0)) or
 	                 (s_Q(2) and s_Q(1) and not s_Q(0)) or
-	                 (s_Q(2)and s_Q(1) and s_Q(0));
-	o_Lights_L(0) <= (not s_Q(2)and not s_Q(1) and s_Q(0)) or
+	                 (s_Q(2)and s_Q(1) and s_Q(0)));
+	o_lights_L(0) <= ((not s_Q(2)and not s_Q(1) and s_Q(0)) or
 	                 (s_Q(2) and not s_Q(1) and s_Q(0)) or 
 	                 (s_Q(2)and s_Q(1)  and not s_Q(0)) or
-	                 (s_Q(2) and s_Q(1) and s_Q(0));
-	
-	o_Lights_R(2) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
-	                 (not s_Q(2) and s_Q(1) and not s_Q(0)) or
+	                 (s_Q(2) and s_Q(1) and s_Q(0)));	
+	o_lights_R(0) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
+	                  (s_Q(2) and not s_Q(1) and not s_Q(0)) or
 	                 (not s_Q(2) and s_Q(1) and s_Q(0)) or
-	                 (s_Q(2) and not s_Q(1) and not s_Q(0));
-	o_Lights_R(1) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
+	                 (not s_Q(2) and s_Q(1) and not s_Q(0));
+	o_lights_R(1) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
 	                 (not s_Q(2) and s_Q(1) and s_Q(0)) or 
 	                 (s_Q(2) and not s_Q(1) and not s_Q(0));
-	o_Lights_R(0) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
+	o_lights_R(2) <= (not s_Q(2) and not s_Q(1) and s_Q(0)) or
 	                 (s_Q(2) and not s_Q(1) and not s_Q(0));
     ---------------------------------------------------------------------------------
 	
@@ -142,7 +160,7 @@ begin
 	register_proc : process ( i_clk, i_reset )
     begin
         if i_reset = '1' then
-          s_Q <= "10";    --Reset state is yellow
+          s_Q <= "000";    --Reset state is yellow
          elsif (rising_edge(i_clk)) then
           s_Q <= s_Q_next;
         end if;
